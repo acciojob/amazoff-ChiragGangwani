@@ -30,7 +30,6 @@ public class OrderController {
 
     @PostMapping("/add-partner/{partnerId}")
     public ResponseEntity<String> addPartner(@PathVariable String partnerId){
-
         return orderService.addPartner(partnerId);
     }
 

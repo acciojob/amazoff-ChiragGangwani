@@ -10,9 +10,39 @@ import java.util.List;
 
 @Repository
 public class OrderRepository {
-    HashMap<String,Order> orders=new HashMap<>();
-    HashMap<String, ArrayList<String>> partners=new HashMap<>();
-    HashMap<String,String> orderPartnerPair=new HashMap<>();
+    private HashMap<String,Order> orders;
+    private HashMap<String, ArrayList<String>> partners;
+    private HashMap<String,String> orderPartnerPair;
+
+    public OrderRepository() {
+        this.orders=new HashMap<>();
+                this.orderPartnerPair=new HashMap<>();
+                        this.partners=new HashMap<>();
+    }
+
+    public HashMap<String, Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(HashMap<String, Order> orders) {
+        this.orders = orders;
+    }
+
+    public HashMap<String, ArrayList<String>> getPartners() {
+        return partners;
+    }
+
+    public void setPartners(HashMap<String, ArrayList<String>> partners) {
+        this.partners = partners;
+    }
+
+    public HashMap<String, String> getOrderPartnerPair() {
+        return orderPartnerPair;
+    }
+
+    public void setOrderPartnerPair(HashMap<String, String> orderPartnerPair) {
+        this.orderPartnerPair = orderPartnerPair;
+    }
 
     public ResponseEntity<String> addOrder(Order order) {
         if(orders.containsKey(order.getId())){
