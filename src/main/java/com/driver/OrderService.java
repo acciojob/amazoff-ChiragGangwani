@@ -1,7 +1,7 @@
 package com.driver;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,55 +11,62 @@ public class OrderService {
 
     @Autowired
     OrderRepository orderRepository;
-    public ResponseEntity<String> addOrder(Order order) {
-        return orderRepository.addOrder(order);
+    public void addOrder(Order order){
+        orderRepository.addOrder(order);
     }
 
-    public ResponseEntity<String> addPartner(String partnerId) {
-        return orderRepository.addPartner(partnerId);
+    public void addPartner(String partnerId){
+        orderRepository.addPartner(partnerId);
     }
 
-    public ResponseEntity<String> addOrderPartnerPair(String orderId, String partnerId) {
-        return orderRepository.addOrderPartnerPair(orderId,partnerId);
+    public void addOrderPartnerPair(String orderId, String partnerId){
+        orderRepository.addOrderPartnerPair(orderId,partnerId);
     }
-
-    public ResponseEntity<Order> getOrderById(String orderId) {
+    public Order getOrderById(String orderId){
         return orderRepository.getOrderById(orderId);
     }
 
-    public ResponseEntity<DeliveryPartner> getPartnerById(String partnerId) {
+    public DeliveryPartner getPartnerById(String partnerId){
         return orderRepository.getPartnerById(partnerId);
     }
 
-    public ResponseEntity<Integer> getOrderCountByPartnerId(String partnerId) {
+    public int getOrderCountByPartnerId(String partnerId){
         return orderRepository.getOrderCountByPartnerId(partnerId);
     }
 
-    public ResponseEntity<List<String>> getOrdersByPartnerId(String partnerId) {
+    public List<String> getOrdersByPartnerId(String partnerId){
         return orderRepository.getOrdersByPartnerId(partnerId);
     }
 
-    public ResponseEntity<List<String>> getAllOrders() {
+    public List<String> getAllOrders(){
         return orderRepository.getAllOrders();
     }
 
-    public ResponseEntity<Integer> getCountOfUnassignedOrders() {
+    public int getCountOfUnassignedOrders(){
         return orderRepository.getCountOfUnassignedOrders();
     }
 
-    public ResponseEntity<Integer> getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId) {
-        return orderRepository.getOrdersLeftAfterGivenTimeByPartnerId(time,partnerId);
+    public int getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId){
+        String newTime[] = time.split(":");
+        int timeInt = Integer.parseInt(newTime[0])*60 + Integer.parseInt(newTime[1]);
+
+        return orderRepository.getOrdersLeftAfterGivenTimeByPartnerId(timeInt, partnerId);
     }
 
-    public ResponseEntity<String> getLastDeliveryTimeByPartnerId(String partnerId) {
-        return orderRepository.getLastDeliveryTimeByPartnerId(partnerId);
+    public String getLastDeliveryTimeByPartnerId(String partnerId){
+        int time = orderRepository.getLastDeliveryTimeByPartnerId(partnerId);
+        String HH = String.valueOf(time/60);
+        String MM = String.valueOf(time%60);
+        String ans = HH + ":" + MM;
+
+        return ans;
     }
 
-    public ResponseEntity<String> deletePartnerById(String partnerId) {
-        return orderRepository.deletePartnerById(partnerId);
+    public void deletePartnerById(String partnerId){
+        orderRepository.deletePartnerById(partnerId);
     }
 
-    public ResponseEntity<String> deleteOrderById(String orderId) {
-        return orderRepository.deleteOrderById(orderId);
+    public void deleteOrderById(String orderId){
+        orderRepository.deleteOrderById(orderId);
     }
 }
